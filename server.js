@@ -136,7 +136,8 @@ app.get('/dashboard', requireLogin, async (req, res) => {
         const data = await getPortfolioData();
         res.render('dashboard', { data: data, message: null });
     } catch (err) {
-        res.status(500).send("Server Error");
+        console.error(err);
+        res.status(500).send("Server Error: " + err.message);
     }
 });
 
