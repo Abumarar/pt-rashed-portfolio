@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - لوحة التحكم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.rtl.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        .btn-primary {
+            background-color: #2c7a7b;
+            border-color: #2c7a7b;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #236c6d;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+        <h3 class="text-center mb-4">تسجيل الدخول</h3>
+
+        <% if (error) { %>
+            <div class="alert alert-danger text-center">
+                <%= error %>
+            </div>
+            <% } %>
+
+                <form action="/login" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">كلمة المرور</label>
+                        <input type="password" name="password" class="form-control" required autofocus>
+                    </div>
+                    <button type="submit" class="btn btn-primary">دخول</button>
+                </form>
+                <div class="text-center mt-3">
+                    <a href="/" class="text-secondary text-decoration-none">العودة للرئيسية</a>
+                </div>
+    </div>
+
+</body>
+
+</html>

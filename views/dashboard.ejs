@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.rtl.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 900px;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #2c7a7b;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #2c7a7b;
+            border-color: #2c7a7b;
+        }
+
+        .btn-primary:hover {
+            background-color: #236c6d;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>لوحة التحكم</h1>
+            <a href="/" class="btn btn-outline-secondary" target="_blank">معاينة الموقع</a>
+        </div>
+
+        <% if (message) { %>
+            <div class="alert alert-success">
+                <%= message %>
+            </div>
+            <% } %>
+
+                <form action="/dashboard/update" method="POST" enctype="multipart/form-data">
+
+                    <!-- Hero Section -->
+                    <div class="card">
+                        <div class="card-header">القسم الرئيسي (Hero)</div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">العنوان الوظيفي</label>
+                                <input type="text" class="form-control" name="heroTitle" value="<%= data.hero.title %>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">الاسم</label>
+                                <input type="text" class="form-control" name="heroName" value="<%= data.hero.name %>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">الوصف</label>
+                                <textarea class="form-control" name="heroDescription"
+                                    rows="3"><%= data.hero.description %></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">الصورة الشخصية</label>
+                                <input type="file" class="form-control" name="profileImage">
+                                <small class="text-muted">اتركها فارغة للاحتفاظ بالصورة الحالية.</small>
+                                <div class="mt-2">
+                                    <img src="<%= data.hero.image %>" alt="Current Image"
+                                        style="height: 100px; border-radius: 50%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience Section -->
+                    <div class="card">
+                        <div class="card-header">الخبرات والمؤهلات</div>
+                        <div class="card-body" id="experience-container">
+                            <% data.experience.forEach((exp, index)=> { %>
+                                <div class="border p-3 mb-3 rounded bg-light">
+                                    <h5>خبرة #<%= index + 1 %>
+                                    </h5>
+                                    <div class="mb-2">
+                                        <label>العنوان</label>
+                                        <input type="text" class="form-control" name="experience[<%= index %>][title]"
+                                            value="<%= exp.title %>">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label>التاريخ</label>
+                                        <input type="text" class="form-control" name="experience[<%= index %>][date]"
+                                            value="<%= exp.date %>">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label>الموقع</label>
+                                        <input type="text" class="form-control"
+                                            name="experience[<%= index %>][location]" value="<%= exp.location %>">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label>الوصف (نقطة في كل سطر)</label>
+                                        <% if (Array.isArray(exp.description)) { %>
+                                            <% exp.description.forEach((desc, i)=> { %>
+                                                <input type="text" class="form-control mb-1"
+                                                    name="experience[<%= index %>][description][]" value="<%= desc %>">
+                                                <% }) %>
+                                                    <% } else { %>
+                                                        <input type="text" class="form-control"
+                                                            name="experience[<%= index %>][description][]"
+                                                            value="<%= exp.description %>">
+                                                        <% } %>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                    </div>
+
+                    <!-- Services Section -->
+                    <div class="card">
+                        <div class="card-header">الخدمات</div>
+                        <div class="card-body">
+                            <% data.services.forEach((srv, index)=> { %>
+                                <div class="border p-3 mb-3 rounded bg-light">
+                                    <h5>خدمة #<%= index + 1 %>
+                                    </h5>
+                                    <div class="mb-2">
+                                        <label>العنوان</label>
+                                        <input type="text" class="form-control" name="services[<%= index %>][title]"
+                                            value="<%= srv.title %>">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label>أيقونة (FontAwesome)</label>
+                                        <input type="text" class="form-control" name="services[<%= index %>][icon]"
+                                            value="<%= srv.icon %>">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label>الوصف</label>
+                                        <input type="text" class="form-control"
+                                            name="services[<%= index %>][description]" value="<%= srv.description %>">
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                    </div>
+
+                    <!-- Skills Section -->
+                    <div class="card">
+                        <div class="card-header">المهارات</div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">المهارات (كل مهارة في حقل)</label>
+                                <% data.skills.forEach((skill, index)=> { %>
+                                    <input type="text" class="form-control mb-2" name="skills[]" value="<%= skill %>">
+                                    <% }) %>
+                                        <!-- Extra slot for adding new skill -->
+                                        <input type="text" class="form-control mb-2" name="skills[]"
+                                            placeholder="إضافة مهارة جديدة...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Section -->
+                    <div class="card">
+                        <div class="card-header">معلومات التواصل</div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">رقم الهاتف</label>
+                                <input type="text" class="form-control" name="contactPhone"
+                                    value="<%= data.contact.phone %>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">البريد الإلكتروني</label>
+                                <input type="email" class="form-control" name="contactEmail"
+                                    value="<%= data.contact.email %>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">الموقع (العنوان)</label>
+                                <input type="text" class="form-control" name="contactLocation"
+                                    value="<%= data.contact.location %>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">رابط واتساب</label>
+                                <input type="text" class="form-control" name="contactWhatsapp"
+                                    value="<%= data.contact.whatsapp_link %>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">رابط انستغرام</label>
+                                <input type="text" class="form-control" name="contactInstagram"
+                                    value="<%= data.contact.instagram_link %>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mb-5">
+                        <button type="submit" class="btn btn-primary btn-lg">حفظ التغييرات</button>
+                    </div>
+
+                </form>
+    </div>
+
+</body>
+
+</html>

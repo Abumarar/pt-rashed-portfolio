@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملف أعمال أخصائي العلاج الطبيعي | <%= hero.name %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2c7a7b;
+            /* لون تيل (Teal) مريح وطبي */
+            --secondary-color: #38b2ac;
+            --dark-color: #2d3748;
+            --light-bg: #f7fafc;
+            --white: #ffffff;
+            --text-color: #4a5568;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-right: 20px;
+        }
+
+        .nav-links a {
+            color: var(--dark-color);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(44, 122, 123, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .hero-text .title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .hero-text p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-color);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            min-width: 300px;
+        }
+
+        .hero-image img {
+            width: 350px;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 8px solid var(--white);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* --- Section General Styling --- */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            width: 60%;
+            height: 4px;
+            background-color: var(--primary-color);
+            position: absolute;
+            bottom: -10px;
+            left: 20%;
+            border-radius: 2px;
+        }
+
+        /* --- Experience Section --- */
+        .experience-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+
+        .card .date {
+            color: var(--secondary-color);
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .card ul {
+            list-style-position: inside;
+            margin-top: 10px;
+        }
+
+        /* --- Skills Section --- */
+        .skills-section {
+            background-color: var(--white);
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .skill-tag {
+            background-color: #e6fffa;
+            color: var(--primary-color);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: 1px solid var(--secondary-color);
+        }
+
+        /* --- Services --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .service-box i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* --- Contact --- */
+        .contact-content {
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .social-btn {
+            margin-top: 20px;
+            display: inline-flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        /* --- Mobile Responsive --- */
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-image img {
+                width: 250px;
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><%= hero.name %></div>
+                <ul class="nav-links">
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#about">من أنا</a></li>
+                    <li><a href="#experience">الخبرات</a></li>
+                    <li><a href="#services">الخدمات</a></li>
+                    <li><a href="#contact">تواصل معي</a></li>
+                    <li><a href="/dashboard" style="color: var(--primary-color);">لوحة التحكم</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <span class="title"><%= hero.title %></span>
+                <h1><%= hero.name %></h1>
+                <p>
+                    <%= hero.description %>
+                </p>
+                <a href="#contact" class="btn">احجز استشارة <i class="fas fa-arrow-left"></i></a>
+            </div>
+            <div class="hero-image">
+                <img src="<%= hero.image %>" alt="صورة <%= hero.name %>">
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="container">
+    </section>
+
+    <section id="experience" class="container">
+        <div class="section-title">
+            <h2>الخبرات والمؤهلات</h2>
+        </div>
+        <div class="experience-cards">
+            <% experience.forEach(function(item) { %>
+            <div class="card">
+                <h3><%= item.title %></h3>
+                <span class="date"><%= item.date %></span>
+                <p><strong><%= item.location %></strong></p>
+                <ul>
+                    <% item.description.forEach(function(desc) { %>
+                        <li><%= desc %></li>
+                    <% }); %>
+                </ul>
+            </div>
+            <% }); %>
+        </div>
+    </section>
+
+    <section id="services" class="skills-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>المهارات والخدمات</h2>
+            </div>
+
+            <div class="services-grid" style="margin-bottom: 50px;">
+                <% services.forEach(function(service) { %>
+                <div class="service-box">
+                    <i class="<%= service.icon %>"></i>
+                    <h3><%= service.title %></h3>
+                    <p><%= service.description %></p>
+                </div>
+                <% }); %>
+            </div>
+
+            <div class="skills-grid">
+                <% skills.forEach(function(skill) { %>
+                <span class="skill-tag"><%= skill %></span>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="container">
+        <div class="section-title">
+            <h2>تواصل معي</h2>
+        </div>
+        <div class="contact-content">
+            <p>للحجز والاستفسار، يرجى التواصل عبر القنوات التالية</p>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <a href="tel:<%= contact.phone %>" style="display:flex; flex-direction:column; align-items:center;">
+                        <i class="fas fa-phone-alt"></i>
+                        <span><%= contact.phone %></span>
+                    </a>
+                </div>
+                <div class="contact-item">
+                    <a href="mailto:<%= contact.email %>"
+                        style="display:flex; flex-direction:column; align-items:center;">
+                        <i class="fas fa-envelope"></i>
+                        <span><%= contact.email %></span>
+                    </a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span><%= contact.location %></span>
+                </div>
+            </div>
+
+            <div class="social-btn">
+                <a href="<%= contact.whatsapp_link %>" target="_blank" class="btn" style="background-color: #25D366;">
+                    <i class="fab fa-whatsapp"></i> واتساب
+                </a>
+                <a href="<%= contact.instagram_link %>" target="_blank" class="btn"
+                    style="background-color: #E1306C;">
+                    <i class="fab fa-instagram"></i> انستغرام
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2026 - <%= hero.name %></p>
+    </footer>
+
+</body>
+
+</html>
