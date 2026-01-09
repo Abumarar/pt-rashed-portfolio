@@ -102,10 +102,12 @@ async function getPortfolioData() {
 // Public Routes
 app.get('/', async (req, res) => {
     try {
-        const data = await getPortfolioData();
+        const doc = await getPortfolioData();
+        const data = doc.toObject(); // Convert to plain object for EJS locals
         res.render('index', data);
     } catch (err) {
-        res.status(500).send("Server Error");
+        console.error(err);
+        res.status(500).send("Server Error: " + err.message);
     }
 });
 
@@ -133,8 +135,8 @@ app.get('/logout', (req, res) => {
 // Protected Dashboard Routes
 app.get('/dashboard', requireLogin, async (req, res) => {
     try {
-        const data = await getPortfolioData();
-        res.render('dashboard', { data: data, message: null });
+        const doc = await getPortfolioData();
+        res.render('dashboard', { data: doc.toObject(), message: null });
     } catch (err) {
         console.error(err);
         res.status(500).send("Server Error: " + err.message);
